@@ -4,6 +4,9 @@ module.exports = function toReadable(number) {
 
     const str = String(number)
 
+    // remove extra spaces
+    const clearSpaces = string => string.replace(/ +/g, ' ').trim()
+
 
     if (number < 20) return numbersArrayUpToTwenty[number]
 
@@ -15,4 +18,20 @@ module.exports = function toReadable(number) {
         }
     }
 
+    if (number >= 100) {
+        const hundreds = numbersArrayUpToTwenty[str[0]]
+        const dozens = dozensArr[str[1]]
+        const singleNum = numbersArrayUpToTwenty[str[2]]
+
+        if (str.slice(-1) != 0) {
+
+            if (str[1] >= 1 && str[1] < 2) {
+                return clearSpaces(`${hundreds} hundred ${numbersArrayUpToTwenty[Number(str.substring(str.length - 2))]}`)
+            }
+
+            return clearSpaces(`${hundreds} hundred ${dozens} ${singleNum}`)
+        } else {
+            return clearSpaces(`${hundreds} hundred ${dozens}`)
+        }
+    }
 }
